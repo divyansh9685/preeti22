@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Surprise for Preeti ❤️</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@400;700&display=swap');
+
+  :root {
+    --pink-light: #ffc1cc;
+    --pink-lighter: #ffe6f0;
+    --pink-dark: #c71585;
+    --pink-dark-alt: #880e4f;
+    --pink-glow: #ff69b4;
+    --heart-color: #ff3366;
+  }
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, var(--pink-light) 0%, var(--pink-lighter) 100%);
+    overflow-x: hidden;
+    color: #444;
+    cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'), auto;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  body.night {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #eee;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--pink-dark);
+    text-shadow: 0 0 8px var(--pink-glow);
+  }
+
+  #countdown {
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: 700;
+    color: var(--pink-dark);
+  }
+
+  #message {
+    max-width: 600px;
+    margin: 2rem auto 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    white-space: pre-wrap;
+    font-weight: 500;
+    min-height: 120px;
+    line-height: 1.5;
+    color: var(--pink-dark-alt);
+  }
+
+  #message .cursor {
+    display: inline-block;
+    width: 2px;
+    background: var(--pink-dark);
+    animation: blink 1s steps(2, start) infinite;
+    vertical-align: bottom;
+    margin-left: 2px;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Balloons */
+  #balloons {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    margin: 2rem 0;
+    overflow: visible;
+    display: none;
+  }
+  .balloon {
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 80px;
+    border-radius: 50% / 60%;
+    cursor: pointer;
+    background: linear-gradient(145deg, #ff5f87, #ff0844);
+    box-shadow: inset -5px -5px 8px rgba(255,255,255,0.6);
+    animation: floatUp linear forwards;
+    opacity: 0;
+    pointer-events: auto;
+  }
+  .balloon:nth-child(1) { left: 10%; background: linear-gradient(145deg, #ff8a00, #e52e71); animation-duration: 9s; }
+  .balloon:nth-child(2) { left: 30%; background: linear-gradient(145deg, #f7971e, #ffd200); animation-duration: 11s; }
+  .balloon:nth-child(3) { left: 50%; background: linear-gradient(145deg, #ec008c, #fc6767); animation-duration: 10s; }
+  .balloon:nth-child(4) { left: 70%; background: linear-gradient(145deg, #00c6ff, #0072ff); animation-duration: 12s; }
+  .balloon:nth-child(5) { left: 90%; background: linear-gradient(145deg, #ff416c, #ff4b2b); animation-duration: 9.5s; }
+
+  @keyframes floatUp {
+    0% { bottom: 0; opacity: 1; }
+    100% { bottom: 400px; opacity: 0; }
+  }
+
+  /* Hearts background */
+  .heart {
+    position: fixed;
+    bottom: -40px;
+    width: 20px;
+    height: 18px;
+    background: var(--heart-color);
+    transform: rotate(-45deg);
+    animation: heartFloat linear forwards;
+    z-index: 0;
+    opacity: 0.8;
+  }
+  .heart:before,
+  .heart:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 18px;
+    background: var(--heart-color);
+    border-radius: 50%;
+  }
+  .heart:before {
+    top: -10px;
+    left: 0;
+  }
+  .heart:after {
+    left: 10px;
+    top: 0;
+  }
+  @keyframes heartFloat {
+    0% { transform: translateY(0) rotate(-45deg); opacity: 0.8; }
+    100% { transform: translateY(-600px) rotate(-45deg); opacity: 0; }
+  }
+
+  /* Cursor sparkles */
+  .sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ff66cc 60%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkleFade 0.8s forwards;
+    mix-blend-mode: screen;
+    z-index: 10;
+  }
+  @keyframes sparkleFade {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(2); }
+  }
+
+  /* Slideshow */
+  #slideshow {
+    max-width: 600px;
+    margin: 3rem auto;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none;
+  }
+  #slideshow img {
+    width: 100%;
+    display: none;
+    transition: opacity 1s ease-in-out;
+  }
+  #slideshow img.active {
+    display: block;
+  }
+
+  /* Buttons */
+  #replayBtn, #modeToggle, #heartRainBtn {
+    cursor: pointer;
+    background: var(--pink-dark);
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1rem;
+    margin: 1rem 10px;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(199,21,133,0.6);
+    transition: background 0.3s ease;
+  }
+  #replayBtn:hover, #modeToggle:hover, #heartRainBtn:hover {
+    background: var(--pink-glow);
+  }
+  #buttonContainer {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  /* Confetti */
+  #confettiCanvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+
+  /* Voice message */
+  #voiceMsgContainer {
+    text-align: center;
+    margin-top: 1rem;
+    display: none;
+  }
+  #voiceMsgContainer audio {
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(199,21,133,0.5);
+  }
+</style>
+</head>
+<body>
+
+<header role="banner">Preeti, This is For You ❤️</header>
+
+<div id="countdown" aria-live="polite" aria-atomic="true">5</div>
+
+<div id="message" aria-live="polite" aria-atomic="true"></div>
+
+<div id="balloons" role="list">
+  <div class="balloon" role="listitem" tabindex="0" aria-label="Balloon"></div>
+  <div class="balloon" role="listitem" tabindex="0" aria-label="Balloon"></div>
+  <div class="balloon" role="listitem" tabindex="0" aria-label="Balloon"></div>
+  <div class="balloon" role="listitem" tabindex="0" aria-label="Balloon"></div>
+  <div class="balloon" role="listitem" tabindex="0" aria-label="Balloon"></div>
+</div>
+
+<div id="slideshow" aria-label="Photo slideshow">
+  <img src="IMG-20250610-WA0005.jpg" alt="Preeti smiling" class="active" />
+  <img src="IMG-20250610-WA0008.jpg" alt="Preeti and Divyansh together" />
+  <img src="IMG-20250610-WA0002.jpg" alt="Happy moments with Preeti" />
+  <img src="IMG-20250610-WA0002.jpg" alt="happy"/>
+  <img src="IMG-20250610-WA0003.jpg" alt="cutie pie"/>
+  <img src="IMG-20250610-WA0004.jpg" alt="preeti"/>
+  <img src="IMG-20250610-WA0009.jpg" alt="mine"/>
+  <img src="IMG-20250610-WA0007.jpg" alt="love"/>
+</div>
+
+<div id="voiceMsgContainer" aria-live="polite" aria-atomic="true">
+  <audio controls>
+    <source src="WhatsApp Audio 2025-06-10 at 10.15.40_82c5f280.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<div id="buttonContainer">
+  <button id="replayBtn" aria-label="Replay Surprise">Replay</button>
+  <button id="modeToggle" aria-label="Toggle Light/Dark Mode">Toggle Light/Dark</button>
+  <button id="heartRainBtn" aria-label="Toggle Heart Rain">Hearts Rain</button>
+</div>
+
+<canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+<script>
+(() => {
+  'use strict';
+
+  const countdownEl = document.getElementById('countdown');
+  const messageEl = document.getElementById('message');
+  const balloonsEl = document.getElementById('balloons');
+  const balloons = [...balloonsEl.children];
+  const slideshow = document.getElementById('slideshow');
+  const voiceMsgContainer = document.getElementById('voiceMsgContainer');
+  const replayBtn = document.getElementById('replayBtn');
+  const modeToggle = document.getElementById('modeToggle');
+  const heartRainBtn = document.getElementById('heartRainBtn');
+  const confettiCanvas = document.getElementById('confettiCanvas');
+  const ctx = confettiCanvas.getContext('2d');
+
+  let countdownValue = 2;
+  let typingInterval;
+  let messageIndex = 0;
+  let messageText = '';
+  let slideshowIndex = 0;
+  let slideshowInterval;
+  let confettiAnimationId;
+  let heartsRaining = false;
+  let sparkleTimeout;
+
+  const message = `Preeti ❤️,
+
+This surprise is just for you!
+You light up my life in ways words can't express.
+Every moment with you feels like magic.
+
+Love,
+raj 💖`;
+
+  // Setup confetti particles
+  const confettiParticles = [];
+  const confettiColors = ['#FF5F87', '#FFC1CC', '#C71585', '#FF69B4', '#FFE6F0'];
+
+  function resizeCanvas() {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function createConfettiParticle() {
+    return {
+      x: Math.random() * confettiCanvas.width,
+      y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+      size: 8 + Math.random() * 8,
+      color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+      speed: 1 + Math.random() * 3,
+      angle: Math.random() * 2 * Math.PI,
+      angularSpeed: (Math.random() - 0.5) * 0.1,
+      tilt: Math.random() * 10 - 10,
+      tiltSpeed: 0.05 + Math.random() * 0.05
+    };
+  }
+
+  function initConfetti(num = 100) {
+    confettiParticles.length = 0;
+    for (let i = 0; i < num; i++) {
+      confettiParticles.push(createConfettiParticle());
+    }
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiParticles.forEach(p => {
+      p.y += p.speed;
+      p.angle += p.angularSpeed;
+      p.tilt += p.tiltSpeed;
+
+      if (p.y > confettiCanvas.height) {
+        p.x = Math.random() * confettiCanvas.width;
+        p.y = -10;
+      }
+
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.moveTo(p.x + p.tilt, p.y);
+      ctx.lineTo(p.x + p.tilt + p.size / 2, p.y + p.size / 2);
+      ctx.lineTo(p.x + p.tilt - p.size / 2, p.y + p.size / 2);
+      ctx.closePath();
+      ctx.fill();
+    });
+    confettiAnimationId = requestAnimationFrame(drawConfetti);
+  }
+
+  function startConfetti() {
+    initConfetti();
+    confettiCanvas.style.display = 'block';
+    if (!confettiAnimationId) {
+      drawConfetti();
+    }
+  }
+  function stopConfetti() {
+    cancelAnimationFrame(confettiAnimationId);
+    confettiAnimationId = null;
+    confettiCanvas.style.display = 'none';
+  }
+
+  // Typing effect
+  function typeMessage() {
+    if (messageIndex < message.length) {
+      messageText += message[messageIndex++];
+      messageEl.textContent = messageText + (messageIndex % 2 === 0 ? '|' : '');
+    } else {
+      clearInterval(typingInterval);
+      messageEl.textContent = messageText; // remove cursor
+      showBalloons();
+    }
+  }
+
+  // Countdown
+  function startCountdown() {
+    countdownValue = 2;
+    countdownEl.textContent = countdownValue;
+    messageEl.textContent = '';
+    messageText = '';
+    messageIndex = 0;
+    balloonsEl.style.display = 'none';
+    slideshow.style.display = 'none';
+    voiceMsgContainer.style.display = 'none';
+
+    const intervalId = setInterval(() => {
+      countdownValue--;
+      if (countdownValue > 0) {
+        countdownEl.textContent = countdownValue;
+      } else {
+        clearInterval(intervalId);
+        countdownEl.style.display = 'none';
+        startTyping();
+      }
+    }, 1000);
+  }
+
+  function startTyping() {
+    messageEl.textContent = '';
+    typingInterval = setInterval(typeMessage, 60);
+  }
+
+  // Balloon pop
+  function showBalloons() {
+    balloonsEl.style.display = 'block';
+    balloons.forEach(balloon => {
+      balloon.style.opacity = 1;
+      balloon.style.bottom = '0px';
+      balloon.style.pointerEvents = 'auto';
+      balloon.style.animationPlayState = 'paused';
+      balloon.addEventListener('click', popBalloon);
+      balloon.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          popBalloon.call(balloon);
+        }
+      });
+    });
+  }
+
+  function popBalloon() {
+    this.style.pointerEvents = 'none';
+    this.style.animationPlayState = 'running';
+    this.style.animationName = 'floatUp';
+    this.style.opacity = 0;
+
+    // After animation, hide balloon
+    setTimeout(() => {
+      this.style.display = 'none';
+      if ([...balloonsEl.children].every(b => b.style.display === 'none')) {
+        showSlideshow();
+      }
+    }, 1000);
+  }
+
+  // Slideshow
+  function showSlideshow() {
+    slideshow.style.display = 'block';
+    slideshowIndex = 0;
+    updateSlideshow();
+    slideshowInterval = setInterval(() => {
+      slideshowIndex = (slideshowIndex + 1) % slideshow.children.length;
+      updateSlideshow();
+    }, 4000);
+
+    // Show voice message after 3 seconds
+    setTimeout(() => {
+      voiceMsgContainer.style.display = 'block';
+    }, 3000);
+  }
+
+  function updateSlideshow() {
+    [...slideshow.children].forEach((img, idx) => {
+      img.classList.toggle('active', idx === slideshowIndex);
+    });
+  }
+
+  // Cursor sparkles
+  function createSparkle(x, y) {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    sparkle.style.left = `${x}px`;
+    sparkle.style.top = `${y}px`;
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 800);
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    // Throttle sparkles
+    if (sparkleTimeout) return;
+    sparkleTimeout = setTimeout(() => {
+      sparkleTimeout = null;
+    }, 50);
+    createSparkle(e.clientX, e.clientY);
+  });
+
+  // Heart rain
+  let heartInterval;
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = `${Math.random() * window.innerWidth}px`;
+    heart.style.animationDuration = `${3 + Math.random() * 2}s`;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }
+
+  function toggleHeartRain() {
+    heartsRaining = !heartsRaining;
+    if (heartsRaining) {
+      heartInterval = setInterval(createHeart, 300);
+      heartRainBtn.textContent = 'Stop Hearts Rain';
+    } else {
+      clearInterval(heartInterval);
+      heartRainBtn.textContent = 'Hearts Rain';
+    }
+  }
+
+  heartRainBtn.addEventListener('click', toggleHeartRain);
+
+  // Replay button
+  replayBtn.addEventListener('click', () => {
+    clearInterval(typingInterval);
+    clearInterval(slideshowInterval);
+    stopConfetti();
+
+    balloons.forEach(b => {
+      b.style.display = 'block';
+      b.style.opacity = 0;
+      b.style.animationPlayState = 'paused';
+    });
+
+    countdownEl.style.display = 'block';
+    slideshow.style.display = 'none';
+    voiceMsgContainer.style.display = 'none';
+    messageEl.textContent = '';
+    messageText = '';
+    messageIndex = 0;
+
+    startCountdown();
+  });
+
+  // Light/Dark mode toggle
+  modeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('night');
+  });
+
+  // Initialize
+  startCountdown();
+
+  // Optional: Confetti on slideshow start
+  // Start confetti for 5 seconds after slideshow starts
+  const startConfettiWithSlideshow = () => {
+    startConfetti();
+    setTimeout(stopConfetti, 5000);
+  };
+
+  // Start confetti when slideshow appears
+  const observer = new MutationObserver(() => {
+    if (slideshow.style.display === 'block') {
+      startConfettiWithSlideshow();
+    }
+  });
+  observer.observe(slideshow, { attributes: true, attributeFilter: ['style'] });
+
+})();
+</script>
+
+</body>
+</html>
